@@ -7,9 +7,14 @@ package com.example.demo.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * @author arockia
@@ -25,6 +30,11 @@ public class CostByDate {
 	private Date date;
 	
 	private Integer amount;
+	
+	@JsonIgnoreProperties("costByDate")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "branch")
+	private Branch branch;
 
 	public Integer getId() {
 		return id;
@@ -48,6 +58,14 @@ public class CostByDate {
 
 	public void setAmount(Integer amount) {
 		this.amount = amount;
+	}
+
+	public Branch getBranch() {
+		return branch;
+	}
+
+	public void setBranch(Branch branch) {
+		this.branch = branch;
 	}
 	
 }

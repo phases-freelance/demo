@@ -16,7 +16,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.transaction.Transactional;
+
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellValue;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -49,25 +53,27 @@ public class InputFileProcessServiceImpl implements InputFileProcessService {
 	@Autowired
 	private ValueRepository valueRepository;
 
+	@Transactional
 	@Override
 	public Boolean fileProcess(MultipartFile file) {
 		LOGGER.debug("InputFileProcessServiceImpl -- add -- start");
 		List<Branch> branchList = new ArrayList<>();
 		Branch branch = null;
 		try {
-			FileInputStream excelFile = new FileInputStream(new File("/home/kloudone/Downloads/random.xlsx"));
+//			FileInputStream excelFile = new FileInputStream(new File("/home/kloudone/Downloads/random.xlsx"));
+			FileInputStream excelFile = new FileInputStream(new File("/home/mds-pc/Downloads/random.xlsx"));
 			Workbook workbook = new XSSFWorkbook(excelFile);
 			Sheet datatypeSheet = workbook.getSheetAt(0);
+			FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
 			Iterator<Row> iterator = datatypeSheet.iterator();
 			List<String> headingList = new ArrayList<>();
-			List<String> values = new ArrayList<>();
 			Row currentRow = iterator.next();
 			headingList = readHeadingCells(currentRow);
 			Integer count = 1;
 			while (iterator.hasNext()) {
 				if(count < 129) {
 					currentRow = iterator.next();
-					branch = readCells(currentRow, headingList);
+					branch = readCells(currentRow, headingList, evaluator);
 					branchList.add(branch);
 					count++;
 				}else {
@@ -94,10 +100,8 @@ public class InputFileProcessServiceImpl implements InputFileProcessService {
 		return values;
 	}
 
-	public Branch readCells(Row currentRow, List<String> headingList) {
-		List<String> values = new ArrayList<>();
+	public Branch readCells(Row currentRow, List<String> headingList, FormulaEvaluator evaluator) {
 		List<Value> valueList = valueRepository.findAll();
-//		Value valueObj = new Value();
 		Branch branchObj = new Branch();
 		Iterator<Cell> cellIterator = currentRow.iterator();
 		Cell currentCell = cellIterator.next();
@@ -108,20 +112,26 @@ public class InputFileProcessServiceImpl implements InputFileProcessService {
 		Value valueObj = valueList.stream().filter(i -> i.getName().equals(valueName)).findAny().orElse(null);
 		branchObj.setValue(valueObj);
 		Set<CostByDate> costByDates = new HashSet<>();
-		CostByDate costByDate = new CostByDate();
+		CostByDate costByDate = null;
 		Integer count = 2;
 		while (cellIterator.hasNext()) {
 			currentCell = cellIterator.next();
+			CellValue cellValue = evaluator.evaluate(currentCell);
 			  Date date;
 			  if(count == headingList.size()-1) {
+				  Double val = cellValue.getNumberValue();
 				  Double d = currentCell.getNumericCellValue();
-				 branchObj.setTotalAmount(d.intValue());
+				 branchObj.setTotalAmount(val.intValue());
 			  }else {
 				  try {
+					  
+					  	costByDate = new CostByDate();
 						date = new SimpleDateFormat("dd-MM-yyyy").parse(headingList.get(count));
 						costByDate.setDate(date);
+						Double val = cellValue.getNumberValue();
 						Double d = currentCell.getNumericCellValue();
-						costByDate.setAmount(d.intValue());
+						costByDate.setAmount(val.intValue());
+						costByDate.setBranch(branchObj);
 						costByDates.add(costByDate);
 					} catch (ParseException e) {
 						e.printStackTrace();

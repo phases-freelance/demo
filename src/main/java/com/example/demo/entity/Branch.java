@@ -15,6 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * @author arockia
  *
@@ -34,9 +36,8 @@ public class Branch {
 	
 	private Integer totalAmount;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "tbl_branch_cost_by_date", joinColumns = { @JoinColumn(name = "branch_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "cost_by_date_id") })
+	@JsonIgnoreProperties("branch")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "branch")
 	private Set<CostByDate> costByDate;
 
 	public Integer getId() {
