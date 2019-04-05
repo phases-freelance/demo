@@ -3,6 +3,7 @@
  */
 package com.example.demo.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,9 +45,9 @@ public class CostByDateServiceImpl implements CostByDateService {
 		BranchDto branchDto = null;
 		for (CostByDate costByDate : costByDateList) {
 			branchDto = new BranchDto();
-			branchDto.setBranchName(costByDate.getBranch().getBranchName());
-			branchDto.setValue(costByDate.getBranch().getValue().getName());
-			branchDto.setDate(costByDate.getDate());
+			branchDto.setBranchName(costByDate.getBranch().getBranchName().trim());
+			branchDto.setValue(costByDate.getBranch().getValue().getName().trim());
+			branchDto.setDate(new SimpleDateFormat("dd-MM-yyyy").format(costByDate.getDate()));
 			branchDto.setAmount(costByDate.getAmount());
 			branchDtos.add(branchDto);
 		}

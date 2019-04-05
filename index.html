@@ -86,11 +86,8 @@ $(document).ready(function(){
    "serverSide" : true,
    "order" : [],
    "ajax" : {
-    url:"fetch.php",
-    type:"POST",
-    data:{
-     is_date_search:is_date_search, start_date:start_date, end_date:end_date
-    }
+    url:"http://localhost:8080/api/findBetweenDates/12-12-2018/01-02-2019",
+    type:"GET"
    }
   });
  }

@@ -15,7 +15,7 @@ public class BranchDto {
 	
 	private String value;
 	
-	private Date date;
+	private String date;
 	
 	private Integer amount;
 
@@ -35,11 +35,11 @@ public class BranchDto {
 		this.value = value;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.example.demo.dto.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,6 +51,7 @@ public class CostByDateController {
 		try {
 			fdate = new SimpleDateFormat("dd-MM-yyyy").parse(fromDate);
 			tdate = new SimpleDateFormat("dd-MM-yyyy").parse(toDate);
+			ResponseData responseData= new ResponseData();
 			branchDtos = costByDateService.findBetweenDates(fdate, tdate);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
