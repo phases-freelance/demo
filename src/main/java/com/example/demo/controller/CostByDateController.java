@@ -44,20 +44,24 @@ public class CostByDateController {
 	}
 	
 	@GetMapping(value = "/findBetweenDates/{fromDate}/{toDate}")
-	public List<BranchDto> findBetweenDates(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate) {
+	public ResponseData findBetweenDates(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate) {
 		Date fdate;
 		Date tdate;
 		List<BranchDto> branchDtos = new ArrayList<>();
+		ResponseData responseData= new ResponseData();
 		try {
 			fdate = new SimpleDateFormat("dd-MM-yyyy").parse(fromDate);
 			tdate = new SimpleDateFormat("dd-MM-yyyy").parse(toDate);
-			ResponseData responseData= new ResponseData();
+
 			branchDtos = costByDateService.findBetweenDates(fdate, tdate);
+			responseData.setData(branchDtos);
+			responseData.setRecordsTotal(branchDtos.size());
+			responseData.setRecordsFiltered(branchDtos.size());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return branchDtos;
+		return responseData;
 	}
 	
 	
