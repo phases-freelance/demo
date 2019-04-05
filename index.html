@@ -51,11 +51,11 @@
     <table id="order_data" class="table table-bordered table-striped">
      <thead>
       <tr>
-       <th>ID</th>
        <th>Branch Name</th>
        <th>Value</th>
        <th>Date</th>
-	<th>Date</th>
+	   <th>Amount</th>
+	   <th>Total Amount</th>
       </tr>
      </thead>
     </table>
@@ -72,7 +72,8 @@ $(document).ready(function(){
  
  $('.input-daterange').datepicker({
   todayBtn:'linked',
-  format: "yyyy-mm-dd",
+  //format: "yyyy-mm-dd",
+  format: "dd-MM-yyyy",
   autoclose: true
  });
 
@@ -85,12 +86,15 @@ $(document).ready(function(){
    "serverSide" : true,
    "order" : [],
    "ajax" : {
-    url:"fetch.php",
-    type:"POST",
-    data:{
-     is_date_search:is_date_search, start_date:start_date, end_date:end_date
-    }
-   }
+    url:"http://localhost:8080/api/findBetweenDates/12-12-2018/01-02-2019",
+    type:"GET"
+   },
+   "columns": [
+            { "data": "branchName" },
+            { "data": "value" },
+            { "data": "date" },
+            { "data": "amount" }
+    ]
   });
  }
 
