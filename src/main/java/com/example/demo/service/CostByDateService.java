@@ -6,7 +6,7 @@ package com.example.demo.service;
 import java.util.Date;
 import java.util.List;
 
-import com.example.demo.entity.CostByDate;
+import com.example.demo.dto.BranchDto;
 
 /**
  * @author arockia
@@ -14,8 +14,8 @@ import com.example.demo.entity.CostByDate;
  */
 public interface CostByDateService {
 	
-	List<CostByDate> findByDate(Date date);
+	List<BranchDto> findByDate(Date date);
 	
-	List<CostByDate> findBetweenDates(Date fromDate, Date toDate);
+	List<BranchDto> findBetweenDates(Date fromDate, Date toDate);
 
 }

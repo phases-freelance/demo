@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.entity.CostByDate;
+import com.example.demo.dto.BranchDto;
 import com.example.demo.service.CostByDateService;
 
 /**
@@ -30,33 +30,32 @@ public class CostByDateController {
 	private CostByDateService costByDateService;
 	
 	@GetMapping(value = "/findByDate/{date}")
-	public List<CostByDate> findByDate(@PathVariable("date") String date) {
+	public List<BranchDto> findByDate(@PathVariable("date") String date) {
 		Date date1;
-		List<CostByDate> costByDateList = new ArrayList<>();
+		List<BranchDto> branchDtos = new ArrayList<>();
 		try {
 			date1 = new SimpleDateFormat("dd-MM-yyyy").parse(date);
-			costByDateList = costByDateService.findByDate(date1);
+			branchDtos = costByDateService.findByDate(date1);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return costByDateList;
+		return branchDtos;
 	}
 	
 	@GetMapping(value = "/findBetweenDates/{fromDate}/{toDate}")
-	public List<CostByDate> findBetweenDates(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate) {
+	public List<BranchDto> findBetweenDates(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate) {
 		Date fdate;
 		Date tdate;
-		List<CostByDate> costByDateList = new ArrayList<>();
+		List<BranchDto> branchDtos = new ArrayList<>();
 		try {
 			fdate = new SimpleDateFormat("dd-MM-yyyy").parse(fromDate);
 			tdate = new SimpleDateFormat("dd-MM-yyyy").parse(toDate);
-			costByDateList = costByDateService.findBetweenDates(fdate, tdate);
+			branchDtos = costByDateService.findBetweenDates(fdate, tdate);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return costByDateList;
+		return branchDtos;
 	}
 	
 	
