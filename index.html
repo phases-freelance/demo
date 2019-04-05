@@ -70,12 +70,20 @@
 <script type="text/javascript" language="javascript" >
 $(document).ready(function(){
  
- $('.input-daterange').datepicker({
+ /*$('.input-daterange').datepicker({
   todayBtn:'linked',
-  //format: "yyyy-mm-dd",
+ // format: "yyyy-mm-dd",
   format: "dd-MM-yyyy",
+  monthNames: ["1","2","3","4","5","6","7","8","9","10","11","12"],
+    monthNamesShort: ["1","2","3","4","5","6","7","8","9","10","11","12"],
   autoclose: true
- });
+ });*/
+
+$('.input-daterange').datepicker({
+    format: "dd-mm-yyyy",
+    monthNames: ["1","2","3","4","5","6","7","8","9","10","11","12"],
+    monthNamesShort: ["1","2","3","4","5","6","7","8","9","10","11","12"]
+});
 
  fetch_data('no');
 
@@ -86,7 +94,7 @@ $(document).ready(function(){
    "serverSide" : true,
    "order" : [],
    "ajax" : {
-    url:"http://localhost:8080/api/findBetweenDates/12-12-2018/01-02-2019",
+    url:"http://localhost:8080/api/findBetweenDates/"+start_date+"/"+end_date,
     type:"GET"
    },
    "columns": [
@@ -114,5 +122,4 @@ $(document).ready(function(){
  
 });
 </script>
-
 
