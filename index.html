@@ -32,7 +32,7 @@
   <div class="container box">
    <h1 align="center">Date Range Search Demo</h1>
    <br />
-   <div class="table-responsive">
+   
     <br />
     <div class="row">
      <div class="input-daterange">
@@ -47,20 +47,21 @@
       <input type="button" name="search" id="search" value="Search" class="btn btn-info" />
      </div>
     </div>
-    <br />
-    <table id="order_data" class="table table-bordered table-striped">
-     <thead>
-      <tr>
-       <th>Branch Name</th>
-       <th>Value</th>
-       <th>Date</th>
-	   <th>Amount</th>
-	   <th>Total Amount</th>
-      </tr>
-     </thead>
-    </table>
+    <div class="row">
+				<table id="order_data" class="table table-bordered table-striped" width="100%">
+					<thead>
+						<tr>
+							<th>Branch Name</th>
+							<th>Value</th>
+							<th>Date</th>
+							<th>Amount</th>
+							<th>Total Amount</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
     
-   </div>
+   
   </div>
  </body>
 </html>
@@ -89,7 +90,7 @@ $('.input-daterange').datepicker({
 
  function fetch_data(is_date_search, start_date='', end_date='')
  {
-  var dataTable = $('#order_data').DataTable({
+  /*var dataTable = $('#order_data').DataTable({
    "processing" : true,
    "serverSide" : true,
    "order" : [],
@@ -103,7 +104,19 @@ $('.input-daterange').datepicker({
             { "data": "date" },
             { "data": "amount" }
     ]
-  });
+  });*/
+$('#order_data').DataTable( {
+        ajax: {
+           url:"http://localhost:8080/api/findBetweenDates/"+start_date+"/"+end_date,
+           method: "GET"
+        },
+        columns: [
+            { "data": "branchName" },
+            { "data": "value" },
+            { "data": "date" },
+            { "data": "amount" }
+    ]
+    } );
  }
 
  $('#search').click(function(){
