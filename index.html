@@ -47,6 +47,8 @@
       <input type="button" name="search" id="search" value="Search" class="btn btn-info" />
      </div>
     </div>
+<br />
+<br />
     <div class="row">
 				<table id="order_data" class="table table-bordered table-striped" width="100%">
 					<thead>
@@ -55,7 +57,7 @@
 							<th>Value</th>
 							<th>Date</th>
 							<th>Amount</th>
-							<th>Total Amount</th>
+						
 						</tr>
 					</thead>
 				</table>
@@ -108,7 +110,7 @@ $('.input-daterange').datepicker({
   });*/
 $('#order_data').DataTable( {
         ajax: {
-           url:"http://localhost:8080/api/findBetweenDates/"+start_date+"/"+end_date,
+           url:"http://localhost:8080/api/findBetweenDates?fromDate="+start_date+"&toDate="+end_date,
            method: "GET"
         },
         columns: [

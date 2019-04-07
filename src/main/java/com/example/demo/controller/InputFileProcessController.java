@@ -22,9 +22,8 @@ public class InputFileProcessController {
 	@Autowired
 	private InputFileProcessService inputFileProccessService;
 	
-	@PostMapping("/fileProcess")
-	public Boolean fileProcess(MultipartFile file) {
-		Boolean result = inputFileProccessService.fileProcess(file);
-		return result;
+	@PostMapping("/upload")
+	public Boolean upload(MultipartFile file) {
+		return inputFileProccessService.fileProcess(file);
 	}
 }

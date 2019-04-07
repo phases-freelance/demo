@@ -18,4 +18,5 @@ public interface CostByDateService {
 	
 	List<BranchDto> findBetweenDates(Date fromDate, Date toDate);
 
+	List<BranchDto> findAll();
 }

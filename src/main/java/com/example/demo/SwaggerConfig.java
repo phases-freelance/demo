@@ -18,7 +18,7 @@ public class SwaggerConfig {
 	 */
 	@Bean
 	public Docket clientApi() {
-		return new Docket(DocumentationType.SWAGGER_2).groupName("api-1.0").select()
+		return new Docket(DocumentationType.SWAGGER_2).select()
 				.apis(RequestHandlerSelectors.basePackage("com.example.demo.controller"))
 				.build();
 

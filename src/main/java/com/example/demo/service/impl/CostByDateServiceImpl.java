@@ -54,4 +54,17 @@ public class CostByDateServiceImpl implements CostByDateService {
 		return branchDtos;
 	}
 
+	@Override
+	public List<BranchDto> findAll() {
+		List<BranchDto> branchDtoList = new ArrayList<>();
+		costByDateRepository.findAll().stream().forEach(costByDate -> {
+			BranchDto branchDto = new BranchDto();
+			branchDto.setBranchName(costByDate.getBranch().getBranchName().trim());
+			branchDto.setValue(costByDate.getBranch().getValue().getName().trim());
+			branchDto.setDate(new SimpleDateFormat("dd-MM-yyyy").format(costByDate.getDate()));
+			branchDto.setAmount(costByDate.getAmount());
+			branchDtoList.add(branchDto);
+		});
+		return branchDtoList;
+	}
 }

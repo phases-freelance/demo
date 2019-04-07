@@ -3,10 +3,7 @@
  */
 package com.example.demo.service.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,7 +57,7 @@ public class InputFileProcessServiceImpl implements InputFileProcessService {
 		List<Branch> branchList = new ArrayList<>();
 		Branch branch = null;
 		try {
-			FileInputStream excelFile = new FileInputStream(new File("/home/kloudone/Downloads/random.xlsx"));
+			InputStream excelFile = file.getInputStream();
 //			FileInputStream excelFile = new FileInputStream(new File("/home/mds-pc/Downloads/random.xlsx"));
 			Workbook workbook = new XSSFWorkbook(excelFile);
 			Sheet datatypeSheet = workbook.getSheetAt(0);
