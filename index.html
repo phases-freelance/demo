@@ -1,78 +1,78 @@
 
 <html>
- <head>
-  <title>Date Range Search Demo</title>
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-  <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
-  <style>
-   body
-   {
-    margin:0;
-    padding:0;
-    background-color:#f1f1f1;
-   }
-   .box
-   {
-    width:1270px;
-    padding:20px;
-    background-color:#fff;
-    border:1px solid #ccc;
-    border-radius:5px;
-    margin-top:25px;
-   }
-  </style>
-  
+<head>
+	<title>Date Range Search Demo</title>
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+	<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+	<style>
+		body
+		{
+			margin:0;
+			padding:0;
+			background-color:#f1f1f1;
+		}
+		.box
+		{
+			width:1270px;
+			padding:20px;
+			background-color:#fff;
+			border:1px solid #ccc;
+			border-radius:5px;
+			margin-top:25px;
+		}
+	</style>
 
- </head>
- <body>
-  <div class="container box">
-   <h1 align="center">Date Range Search Demo</h1>
-   <br />
-   
-    <br />
-    <div class="row">
-     <div class="input-daterange">
-      <div class="col-md-4">
-       <input type="text" name="start_date" id="start_date" class="form-control" />
-      </div>
-      <div class="col-md-4">
-       <input type="text" name="end_date" id="end_date" class="form-control" />
-      </div>      
-     </div>
-     <div class="col-md-4">
-      <input type="button" name="search" id="search" value="Search" class="btn btn-info" />
-     </div>
-    </div>
-<br />
-<br />
-    <div class="row">
-				<table id="order_data" class="table table-bordered table-striped" width="100%">
-					<thead>
-						<tr>
-							<th>Branch Name</th>
-							<th>Value</th>
-							<th>Date</th>
-							<th>Amount</th>
-						
-						</tr>
-					</thead>
-				</table>
+
+</head>
+<body>
+	<div class="container box">
+		<h1 align="center">Date Range Search Demo</h1>
+		<br />
+
+		<br />
+		<div class="row">
+			<div class="input-daterange">
+				<div class="col-md-4">
+					<input type="text" name="start_date" id="start_date" class="form-control" />
+				</div>
+				<div class="col-md-4">
+					<input type="text" name="end_date" id="end_date" class="form-control" />
+				</div>      
 			</div>
-    
-   
-  </div>
- </body>
+			<div class="col-md-4">
+				<input type="button" name="search" id="search" value="Search" class="btn btn-info" />
+			</div>
+		</div>
+		<br />
+		<br />
+		<div class="row">
+			<table id="order_data" class="table table-bordered table-striped" width="100%">
+				<thead>
+					<tr>
+						<th>Branch Name</th>
+						<th>Value</th>
+						<th>Date</th>
+						<th>Amount</th>
+						
+					</tr>
+				</thead>
+			</table>
+		</div>
+
+
+	</div>
+</body>
 </html>
 
 
 
 <script type="text/javascript" language="javascript" >
-$(document).ready(function(){
- 
+	$(document).ready(function(){
+
  /*$('.input-daterange').datepicker({
   todayBtn:'linked',
  // format: "yyyy-mm-dd",
@@ -80,62 +80,74 @@ $(document).ready(function(){
   monthNames: ["1","2","3","4","5","6","7","8","9","10","11","12"],
     monthNamesShort: ["1","2","3","4","5","6","7","8","9","10","11","12"],
   autoclose: true
- });*/
+});*/
 
 $('.input-daterange').datepicker({
-    format: "dd-mm-yyyy",
-    monthNames: ["1","2","3","4","5","6","7","8","9","10","11","12"],
-    monthNamesShort: ["1","2","3","4","5","6","7","8","9","10","11","12"]
+	format: "dd-mm-yyyy",
+	monthNames: ["1","2","3","4","5","6","7","8","9","10","11","12"],
+	monthNamesShort: ["1","2","3","4","5","6","7","8","9","10","11","12"]
 });
 
- fetch_data('no');
 
- function fetch_data(is_date_search, start_date='', end_date='')
- {
-	 
-  /*var dataTable = $('#order_data').DataTable({
-   "processing" : true,
-   "serverSide" : true,
-   "order" : [],
-   "ajax" : {
-    url:"http://localhost:8080/api/findBetweenDates/"+start_date+"/"+end_date,
-    type:"GET"
-   },
-   "columns": [
-            { "data": "branchName" },
-            { "data": "value" },
-            { "data": "date" },
-            { "data": "amount" }
-    ]
-  });*/
-$('#order_data').DataTable( {
-        ajax: {
+
+fetch_data('no');
+
+function fetch_data(is_date_search, start_date='', end_date='') {
+
+var table = $('#order_data').DataTable( {
+	ajax: {
+		//url:"http://localhost:8080/api/findBetweenDates?fromDate="+"01-01-2019"+"&toDate="+"01-02-2019",
            url:"http://localhost:8080/api/findBetweenDates?fromDate="+start_date+"&toDate="+end_date,
            method: "GET"
-        },
-        columns: [
-            { "data": "branchName" },
-            { "data": "value" },
-            { "data": "date" },
-            { "data": "amount" }
-    ]
-    } );
- }
+       },
+       select: true,
+       orderCellsTop: true,
+       fixedHeader: true,
+       columns: [
+       { "data": "branchName" },
+       { "data": "value" },
+       { "data": "date" },
+       { "data": "amount" }
+       ]
+   } );
 
- $('#search').click(function(){
-  var start_date = $('#start_date').val();
-  var end_date = $('#end_date').val();
-  if(start_date != '' && end_date !='')
-  {
-   $('#order_data').DataTable().destroy();
-   fetch_data('yes', start_date, end_date);
-  }
-  else
-  {
-   alert("Both Date is Required");
-  }
- }); 
+$('#order_data thead th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    } );
  
+    // DataTable
+    var table = $('#order_data').DataTable();
+ 
+    // Apply the search
+    table.columns().every( function () {
+        var that = this;
+ 
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+}
+
+
+
+$('#search').click(function(){
+	var start_date = $('#start_date').val();
+	var end_date = $('#end_date').val();
+	if(start_date != '' && end_date !='')
+	{
+		$('#order_data').DataTable().destroy();
+		fetch_data('yes', start_date, end_date);
+	}
+	else
+	{
+		alert("Both Date is Required");
+	}
+}); 
 });
 </script>
 
