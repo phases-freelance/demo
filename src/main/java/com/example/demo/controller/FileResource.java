@@ -17,7 +17,7 @@ import com.example.demo.service.InputFileProcessService;
  */
 @RestController
 @RequestMapping("/api")
-public class InputFileProcessController {
+public class FileResource {
 
 	@Autowired
 	private InputFileProcessService inputFileProccessService;
