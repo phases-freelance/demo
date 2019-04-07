@@ -4,8 +4,9 @@
 	<title>Date Range Search Demo</title>
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-	<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/r/dt/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,af-2.0.0,b-1.0.3,b-colvis-1.0.3,b-html5-1.0.3,b-print-1.0.3,se-1.0.1/datatables.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+	
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
 	<style>
@@ -96,13 +97,21 @@ function fetch_data(is_date_search, start_date='', end_date='') {
 
 var table = $('#order_data').DataTable( {
 	ajax: {
-		//url:"http://localhost:8080/api/findBetweenDates?fromDate="+"01-01-2019"+"&toDate="+"01-02-2019",
-           url:"http://localhost:8080/api/findBetweenDates?fromDate="+start_date+"&toDate="+end_date,
+		url:"http://localhost:8080/api/findBetweenDates?fromDate="+"01-01-2019"+"&toDate="+"01-02-2019",
+         //  url:"http://localhost:8080/api/findBetweenDates?fromDate="+start_date+"&toDate="+end_date,
            method: "GET"
        },
        select: true,
        orderCellsTop: true,
        fixedHeader: true,
+       dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                pageSize: 'LEGAL'
+            }
+    	],
        columns: [
        { "data": "branchName" },
        { "data": "value" },
