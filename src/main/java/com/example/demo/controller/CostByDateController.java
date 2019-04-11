@@ -12,11 +12,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import com.example.demo.dto.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.BranchDto;
+import com.example.demo.dto.ResponseData;
+import com.example.demo.entity.Branch;
 import com.example.demo.service.CostByDateService;
 
 /**
@@ -35,19 +40,19 @@ public class CostByDateController {
 	@GetMapping(value = "/findByDate/{date}")
 	public List<BranchDto> findByDate(@PathVariable("date") String date) {
 		Date date1;
-		List<BranchDto> branchDtos = new ArrayList<>();
+		List<BranchDto> branchList = new ArrayList<>();
 		try {
 			date1 = new SimpleDateFormat("dd-MM-yyyy").parse(date);
-			branchDtos = costByDateService.findByDate(date1);
+			branchList = costByDateService.findByDate(date1);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		return branchDtos;
+		return branchList;
 	}
 	
 	@GetMapping(value = "/findBetweenDates")
 	public ResponseData findBetweenDates(@RequestParam(name = "fromDate", required = false) String fromDate, @RequestParam(name = "toDate", required = false) String toDate) {
-		List<BranchDto> branchDtos = new ArrayList<>();
+		List<BranchDto> branchList = new ArrayList<>();
 		ResponseData responseData= new ResponseData();
 		try {
 
@@ -55,15 +60,15 @@ public class CostByDateController {
                 List<String>daysList = getLast7DaysDates();
                 Date strStartDate = new SimpleDateFormat("dd-MM-yyyy").parse(daysList.get(0));
                 Date strEndDate = new SimpleDateFormat("dd-MM-yyyy").parse(daysList.get(daysList.size() - 1));
-                branchDtos = costByDateService.findBetweenDates(strStartDate, strEndDate);
+                branchList = costByDateService.findBetweenDates(strStartDate, strEndDate);
 			} else {
                 Date fromDateStr = new SimpleDateFormat("dd-MM-yyyy").parse(fromDate);
                 Date toDatestr = new SimpleDateFormat("dd-MM-yyyy").parse(toDate);
-				branchDtos = costByDateService.findBetweenDates(fromDateStr, toDatestr);
+                branchList = costByDateService.findBetweenDates(fromDateStr, toDatestr);
 			}
-			responseData.setData(branchDtos);
-			responseData.setRecordsTotal(branchDtos.size());
-			responseData.setRecordsFiltered(branchDtos.size());
+			responseData.setData(branchList);
+			responseData.setRecordsTotal(branchList.size());
+			responseData.setRecordsFiltered(branchList.size());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

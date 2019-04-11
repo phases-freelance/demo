@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.BranchDto;
+import com.example.demo.entity.Branch;
 import com.example.demo.service.BranchService;
 
 /**
@@ -26,9 +26,9 @@ public class BranchController {
 	private BranchService branchService;
 
 	@GetMapping(value = "/findByTotalAmount/{amount}")
-	public List<BranchDto> findByTotalAmount(@PathVariable("amount") Integer amount) {
-		List<BranchDto> branchDtos = branchService.findByTotalAmount(amount);
-		return branchDtos;
+	public List<Branch> findByTotalAmount(@PathVariable("amount") Integer amount) {
+		List<Branch> branchList = branchService.findByTotalAmount(amount);
+		return branchList;
 	}
 
 //	@PostMapping(value = "/findByDate")

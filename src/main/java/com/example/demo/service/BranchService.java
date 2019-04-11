@@ -5,7 +5,7 @@ package com.example.demo.service;
 
 import java.util.List;
 
-import com.example.demo.dto.BranchDto;
+import com.example.demo.entity.Branch;
 
 /**
  * @author arockia
@@ -13,7 +13,7 @@ import com.example.demo.dto.BranchDto;
  */
 public interface BranchService {
 	
-	List<BranchDto> findByTotalAmount(Integer amount);
+	List<Branch> findByTotalAmount(Integer amount);
 	
 //	List<Branch> findRecordBetweenDates(Date startDate, Date endDate);
 	

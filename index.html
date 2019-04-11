@@ -10,6 +10,9 @@
 <script
 	src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
 
+<script
+	src="https://cdn.rawgit.com/ashl1/datatables-rowsgroup/fbd569b8768155c7a9a62568e66a64115887d7d0/dataTables.rowsGroup.js"></script>
+
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" />
 <script
@@ -144,7 +147,8 @@ var table = $('#order_data').DataTable( {
        { "data": "value" },
        { "data": "date" },
        { "data": "amount" }
-       ]
+       ],
+       rowsGroup: [0],
    } );
 
 $('#order_data thead th').each( function () {
